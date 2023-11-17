@@ -16,8 +16,20 @@ class TestJavaScriptAlerts(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
 
-    def test_Js_simple(self):
-        javalerts = JavaScriptAlertsPage(self.driver)
-        javalerts.load_page()
-        javalerts.click_simple_alert_and_accept()
-        assert javalerts.expected_text_js_alert_simple == javalerts.get_text_js_alert_simple(), "Error, not same text!"
+    def test_js_simple(self):
+        java_alerts = JavaScriptAlertsPage(self.driver)
+        java_alerts.load_page()
+        java_alerts.click_simple_alert_and_accept()
+        assert java_alerts.expected_text_js_alert_simple == java_alerts.get_text_for_js_result(), "Error, not same text!"
+
+    def test_js_confirm_and_accept(self):
+        java_alerts = JavaScriptAlertsPage(self.driver)
+        java_alerts.load_page()
+        java_alerts.click_js_confirm_and_accept()
+        assert java_alerts.expected_text_js_alert_confirm_accept == java_alerts.get_text_for_js_result()
+
+    def test_js_confirm_and_decline(self):
+        java_alerts = JavaScriptAlertsPage(self.driver)
+        java_alerts.load_page()
+        java_alerts.click_js_confirm_and_decline()
+        assert java_alerts.expected_text_js_alert_confirm_decline == java_alerts.get_text_for_js_result()

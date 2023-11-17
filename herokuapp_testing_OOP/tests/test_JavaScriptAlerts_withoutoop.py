@@ -46,7 +46,7 @@ class JavaScriptAlerts(unittest.TestCase):
         sleep(2)
         self.driver.switch_to.alert.dismiss()
         expected_text = "You clicked: Cancel"
-        actual =  self.driver.find_element(*self.RESULT).text
+        actual = self.driver.find_element(*self.RESULT).text
         assert expected_text == actual, "Error, text are not matching"
 
     def test_accept_Js_Prompt_with_text(self):
