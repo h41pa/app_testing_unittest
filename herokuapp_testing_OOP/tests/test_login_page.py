@@ -32,10 +32,13 @@ class TestLoginPage(unittest.TestCase, BasePage):
         login.open()
         login.execute_invalid_username_login()
         time.sleep(2)
-        assert login.expected_invalid_text_username in login.get_error_message(), "Username is not as expected"
+        assert login.expected_invalid_text_username in login.get_error_message(), "Error text is not as expected"
 
     def test_invalid_password(self):
         login = Login(self.driver)
         login.open()
         login.execute_invalid_password_login()
-        assert login.expected_invalid_text_password in login.get_error_message(), "Password is not as expected"
+        time.sleep(2)
+        print(login.expected_invalid_text_password)
+        print(login.get_error_message())
+        assert login.expected_invalid_text_password in login.get_error_message(), "Error text is not as expected"
