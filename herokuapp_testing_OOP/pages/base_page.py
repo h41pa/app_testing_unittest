@@ -30,3 +30,16 @@ class BasePage:
 
     def get_current_url(self):
         return self.driver.current_url
+
+    def accept_alert(self):
+        alert = self.driver.switch_to.alert
+        alert.accept()
+
+    def decline_alert(self):
+        alert = self.driver.switch_to.alert
+        alert.dismiss()
+
+    def type_alert_keys(self, message: str):
+        alert = self.driver.switch_to.alert
+        alert.send_keys(message)
+        alert.accept()
