@@ -1,7 +1,8 @@
 from selenium.common import NoSuchElementException
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support.select import Select
-from selenium.webdriver import Keys
+from selenium.webdriver import Keys, ActionChains
+
 
 class BasePage:
 
@@ -61,7 +62,7 @@ class BasePage:
         if checkbox_element.is_selected():
             self.click(locator)
 
-    def is_selected(self, locator:tuple):
+    def is_selected(self, locator: tuple):
         return self.find(locator).is_selected()
 
     def select_option_by_text(self, locator: tuple, text: str):
@@ -70,3 +71,8 @@ class BasePage:
 
     def select_option_by_value(self, locator: tuple, value):
         Select(self.find(locator)).select_by_value(value)
+
+    def move_to_element(self, locator):
+        action_chains = ActionChains(self.driver)
+        action_chains.move_to_element(self.find(locator)).click().perform()
+        action_chains.context_click()
