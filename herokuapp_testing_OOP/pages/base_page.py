@@ -1,6 +1,7 @@
 from selenium.common import NoSuchElementException
 from selenium.webdriver.chrome.webdriver import WebDriver
-
+from selenium.webdriver.support.select import Select
+from selenium.webdriver import Keys
 
 class BasePage:
 
@@ -43,3 +44,29 @@ class BasePage:
         alert = self.driver.switch_to.alert
         alert.send_keys(message)
         alert.accept()
+
+    def get_number_of_elements(self, locator: tuple):
+        return len(self.driver.find_elements(*locator))
+
+    # def is_element_present(self, locator):
+    #     return len(self.driver.find_elements(*locator)) > 0 # daca nu gaseste nimic returneaza o lista goala
+
+    def check_checkbox(self, locator: tuple):
+        checkbox_element = self.find(locator)
+        if not checkbox_element.is_selected():
+            self.click(locator)
+
+    def uncheck_checkbox(self, locator: tuple):
+        checkbox_element = self.find(locator)
+        if checkbox_element.is_selected():
+            self.click(locator)
+
+    def is_selected(self, locator:tuple):
+        return self.find(locator).is_selected()
+
+    def select_option_by_text(self, locator: tuple, text: str):
+        select = Select(self.find(locator))
+        select.select_by_visible_text(text)
+
+    def select_option_by_value(self, locator: tuple, value):
+        Select(self.find(locator)).select_by_value(value)
