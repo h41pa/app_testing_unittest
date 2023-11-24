@@ -31,4 +31,8 @@ class TestHorizontalSlider(unittest.TestCase, BasePage):
         self.assertEqual(self.get_text(self.range_locator), "1.5", "Error, slider didn t back 2x")
         time.sleep(2)
 
-
+    def test_moving_slider_by_offset(self):
+        location = (By.CSS_SELECTOR, "input[type='range']")
+        actions = ActionChains(self.driver)
+        actions.drag_and_drop_by_offset(self.find(location), 2, 0).perform()
+        time.sleep(3)
