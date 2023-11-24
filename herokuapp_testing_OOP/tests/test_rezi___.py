@@ -1,15 +1,16 @@
 import time
 import unittest
 from selenium import webdriver
-from selenium.webdriver import Keys
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support.ui import Select
 from webdriver_manager.chrome import ChromeDriverManager
 from herokuapp_testing_OOP.pages.base_page import BasePage
 from selenium.webdriver.common.action_chains import ActionChains
 
 
-class TestHorizontalSlider(unittest.TestCase, BasePage):
+class TestSelected(unittest.TestCase, BasePage):
 
     def setUp(self):
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -39,3 +40,37 @@ class TestHorizontalSlider(unittest.TestCase, BasePage):
         self.driver.switch_to.window(main_window)
         self.driver.find_element(By.XPATH, '//*[@id="ta1"]').send_keys('laaaaaaaaaaaa')
         time.sleep(3)
+
+    def test_select_option(self):
+        self.driver.get('https://omayo.blogspot.com/')
+        select_menu = self.driver.find_element(By.ID, 'drop1')
+        select = Select(select_menu)
+        select.select_by_index(3)
+        time.sleep(2)
+        assert 'doc 3' == select.first_selected_option.text, "Error"
+        print(select.first_selected_option.text)
+
+    def test_select_multiple(self):
+        self.driver.get('https://omayo.blogspot.com/')
+        select_menu = self.driver.find_element(By.ID, 'multiselect1')
+        select = Select(select_menu)
+        actions = ActionChains(self.driver)
+        actions.key_down(Keys.CONTROL)
+        actions.click(select.select_by_visible_text('Volvo'))
+        actions.click(select.select_by_visible_text('Swift'))
+        actions.key_up(Keys.CONTROL)
+        actions.perform()
+        time.sleep(3)
+        # selected_options = [option.text for option in select.all_selected_options]
+        selected_options = []
+        for option in select.all_selected_options:
+            selected_options.append(option.text)
+
+        assert 'Volvo' in selected_options
+        assert 'Swift' in selected_options
+
+
+
+
+
+
