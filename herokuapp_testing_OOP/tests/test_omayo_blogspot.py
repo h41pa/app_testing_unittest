@@ -70,7 +70,42 @@ class TestSelected(unittest.TestCase, BasePage):
         assert 'Swift' in selected_options
 
 
+    def test_disabled(self):
+        self.driver.get('https://omayo.blogspot.com/')
+        box = self.driver.find_element(By.XPATH, '//*[@id="tb2"]')
+        self.assertFalse(box.is_enabled())
 
+
+    def test_text_box(self):
+        self.driver.get('https://omayo.blogspot.com/')
+        trt = self.driver.find_element(By.ID, 'textbox1')
+        trt.clear()
+        time.sleep(2)
+        trt.send_keys('helooooo')
+        trt.send_keys(Keys.CONTROL, 'A')
+        time.sleep(2)
+        trt.send_keys(Keys.CONTROL, 'c')
+        trt.clear()
+        time.sleep(2)
+        trt.send_keys(Keys.CONTROL, 'V')
+        time.sleep(2)
+
+    def test_Multi_Selection_box(self):
+        self.driver.get('https://omayo.blogspot.com/')
+        select_menu = self.driver.find_element(By.ID, 'multiselect1')
+        select = Select(select_menu)
+        actions = ActionChains(self.driver)
+        actions.key_down(Keys.CONTROL)
+        actions.click(select.select_by_visible_text('Volvo'))
+        actions.click(select.select_by_visible_text('Swift'))
+        time.sleep(2)
+        assert 2 == len(select.all_selected_options), 'Not same'
+        actions.click(select.select_by_visible_text('Audi'))
+        assert 3 == len(select.all_selected_options), 'Not same'
+        actions.click(select.deselect_all())
+        assert len(select.all_selected_options) == 0, 'Not same'
+        actions.perform()
+        time.sleep(2)
 
 
 
