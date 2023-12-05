@@ -29,6 +29,7 @@ class TestTypos(unittest.TestCase, BasePage):
         else:
             self.assertEqual(self.correct_text, self.get_text(self.text_locator), "Error, a typo is present")
         print(self.get_text(self.text_locator))
+
     def test_typos(self):
         if self.get_text(self.text_locator) == self.correct_text:
             time.sleep(2)
@@ -36,4 +37,3 @@ class TestTypos(unittest.TestCase, BasePage):
         else:
             self.assertNotEqual(self.correct_text, self.get_text(self.text_locator), "Error, no typo visible")
         print(self.get_text(self.text_locator))
-
