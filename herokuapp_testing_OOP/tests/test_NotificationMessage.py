@@ -14,7 +14,7 @@ class TestNotificationMessage(unittest.TestCase, BasePage):
     LINK = 'https://the-internet.herokuapp.com/notification_message_rendered'
     flash_locator = (By.ID, 'flash')
     click_locator = (By.LINK_TEXT, 'Click here')
-    expected_messages = ['Action unsuccessful', 'Action unsuccessful', 'please try again']
+    expected_messages = ['Action successful', 'Action unsuccessful, please try again']
 
     def setUp(self):
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -34,6 +34,7 @@ class TestNotificationMessage(unittest.TestCase, BasePage):
 
         else:
             self.assertEqual('Action successful', self.get_text(self.flash_locator), "Error")
+            print("owo")
 
     def test_get_notification_message_after_refresh(self):
         #checking with 3 clickes what texts we get
